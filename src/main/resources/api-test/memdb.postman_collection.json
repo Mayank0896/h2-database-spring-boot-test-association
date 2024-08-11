@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "7b0ab403-6ddf-4838-8e12-a1c3a2d29609",
+		"name": "memdb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37576297"
+	},
+	"item": [
+		{
+			"name": "Test Link",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/get/employee/2009944",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"get",
+						"employee",
+						"2009944"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/get/order/10346",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"get",
+						"order",
+						"10346"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order By ID v2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v2/get/order/10346",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v2",
+						"get",
+						"order",
+						"10346"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Payment By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Updated test to check for response content type to ensure it is JSON instead of XML\r",
+							"pm.test(\"Response has the expected Content-Type header\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body is not null\", function () {\r",
+							"    pm.expect(pm.response.json()).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body follows the expected XML schema\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    // Write tests for the expected XML schema, handling null or undefined targets\r",
+							"    pm.expect(responseData).to.have.property(\"status\");\r",
+							"    pm.expect(responseData).to.have.property(\"message\");\r",
+							"    pm.expect(responseData).to.have.property(\"body\");\r",
+							"    pm.expect(responseData.body).to.have.property(\"paymentId\").and.not.to.be.null;\r",
+							"    pm.expect(responseData.body).to.have.property(\"name\").and.not.to.be.null;\r",
+							"    pm.expect(responseData.body).to.have.property(\"identifier\").and.not.to.be.null;\r",
+							"    pm.expect(responseData.body).to.have.property(\"time\").and.not.to.be.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/get/payment/1001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"get",
+						"payment",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Employee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"empFirstName\": \"Akshay\",\r\n    \"empLastName\": \"Kumar\",\r\n    \"email\": \"akkumar007e@example.com\",\r\n    \"department\": \"Manufacturing\",\r\n    \"salary\": 2345001.00,\r\n    \"address\": {\r\n        \"addressLine\": \"C-420, Beverly hills road, Bermingham\",\r\n        \"city\": \"Vanchover\",\r\n        \"state\": \"Laplace\",\r\n        \"country\": \"Canada\",\r\n        \"pincode\": \"612394\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employee/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Employee Runner",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"empFirstName\": \"{{first_name}}\",\r\n    \"empLastName\": \"{{last_name}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"department\": \"{{department}}\",\r\n    \"salary\": \"{{salary}}\",\r\n    \"address\": {\r\n        \"addressLine\": \"{{addressLine}}\",\r\n        \"city\": \"{{city}}\",\r\n        \"state\": \"{{state}}\",\r\n        \"country\": \"{{country}}\",\r\n        \"pincode\": \"{{pincode}}\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/employee/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerName\": \"Rohit Shetty\",\r\n    \"mobileNumber\": \"7863545879\",\r\n    \"orderTime\": \"2024-08-10T01:00:00.340\",\r\n    \"items\": [\r\n        {\r\n            \"productName\": \"Lux Soap\",\r\n            \"quantity\": 1,\r\n            \"price\": 85.00\r\n        },\r\n        {\r\n            \"productName\": \"Vim Bar\",\r\n            \"quantity\": 12,\r\n            \"price\": 45.00\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Order Runner",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerName\": \"{{customerName}}\",\r\n    \"mobileNumber\": \"{{mobileNumber}}\",\r\n    \"orderTime\": \"{{orderTime}}\",\r\n    \"items\": {{items}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Payment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Idempotency-Key",
+						"value": "740b80ba-da62-4312-8c02-fe8ea7632a88",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Abhishek Bachan\",\r\n    \"time\": \"2024-08-10T01:00:00.340\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/payment/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"payment",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
